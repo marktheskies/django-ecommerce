@@ -40,8 +40,16 @@ echo 'DEBUG=True' >> .env
 python manage.py migrate
 ```
 
-6. Finally, start the development server:
+6. Create a superuser so you can log into the admin page:
+
+```
+python manage.py createsuperuser
+```
+
+7. Start the development server:
 
 ```bash
 python manage.py runserver
 ```
+
+8. Navigate to http://localhost:8000/admin and log in using your superuser credentials.
