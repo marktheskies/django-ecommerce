@@ -27,11 +27,12 @@ pip install -r requirements-dev.txt
 
 Installing dev dependencies automatically installs dependencies in both `requirements.txt` and `requirements-dev.txt`.
 
-4. Create a file `backend/.env` with a random Django secret key and debug mode configuration:
+4. Create a file `backend/.env` with a random Django secret key, debug mode and CORS configuration:
 
 ```bash
 echo "SECRET_KEY=$(venv/bin/python -c 'import secrets; print(secrets.token_urlsafe())')" > .env
 echo 'DEBUG=True' >> .env
+echo 'CORS_ORIGIN_WHITELIST=http://localhost:8080' >> .env
 ```
 
 5. Apply migrations:
