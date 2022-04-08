@@ -8,6 +8,9 @@ install:
 	backend/venv/bin/python backend/manage.py createsuperuser
 	cd frontend && npm install
 
+clean:
+	rm -rf backend/venv backend/db.sqlite3 frontend/node_modules
+
 run:
 	make -j 2 run-backend run-frontend
 
