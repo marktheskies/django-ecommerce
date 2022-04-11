@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link, Outlet, useParams } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
+import Layout from "./Layout";
+import Product from "./Product";
+import "./App.scss";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 
 const App = () => {
   return (
@@ -11,25 +15,6 @@ const App = () => {
         <Route path="*" element={<FourOhFour />} />
       </Route>
     </Routes>
-  );
-};
-
-const Layout = () => {
-  return (
-    <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/products">Products</Link>
-          </li>
-        </ul>
-      </nav>
-
-      <Outlet />
-    </>
   );
 };
 
@@ -63,24 +48,6 @@ const Products = () => {
           </li>
         ))}
       </ul>
-    </main>
-  );
-};
-
-const Product = () => {
-  const [product, setProduct] = useState("");
-  const { id } = useParams();
-
-  useEffect(() => {
-    fetch(`${process.env.API_URL}/products/${id}`)
-      .then((response) => response.json())
-      .then((product) => setProduct(product));
-  }, []);
-
-  return (
-    <main>
-      <h1>Product detail</h1>
-      <pre>{JSON.stringify(product)}</pre>
     </main>
   );
 };

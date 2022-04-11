@@ -2,9 +2,7 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 
-module.exports = (env) => {
-  console.log(process.env.API_URL);
-
+module.exports = () => {
   return {
     output: {
       path: path.resolve(__dirname, "build"),
@@ -31,15 +29,8 @@ module.exports = (env) => {
           },
         },
         {
-          test: /\.css$/,
-          use: [
-            {
-              loader: "style-loader",
-            },
-            {
-              loader: "css-loader",
-            },
-          ],
+          test: /\.(scss|css)$/,
+          use: ["style-loader", "css-loader", "sass-loader"],
         },
       ],
     },
