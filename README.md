@@ -18,6 +18,14 @@ Once installed, start the frontend and backend development servers.
 make run
 ```
 
+## Seeding the database
+
+You can add fake data to the database for testing using:
+
+```bash
+make seed
+```
+
 - Log into the backend at http://localhost:8000/admin using your superuser credentials.
 
 - The frontend application will available at http://localhost:8080.
