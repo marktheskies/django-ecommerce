@@ -1,14 +1,13 @@
 import random
+from decimal import Decimal
 from pathlib import Path
 from typing import Any, Optional
-from decimal import Decimal
 
-import faker
 import yaml
 from django.core.management.base import BaseCommand, CommandParser
 from django.db.utils import IntegrityError
 from faker import Faker
-from faker.providers import BaseProvider, DynamicProvider
+from faker.providers import BaseProvider
 
 from ...models import Category, Product
 
@@ -68,7 +67,10 @@ class Command(BaseCommand):
             try:
                 categories.append(
                     Category.objects.create(
-                        name=fake.ecommerce_department(), description=fake.paragraph()
+                        name=fake.ecommerce_department(),
+                        description="\n".join(
+                            fake.paragraph(nb_sentences=4) for _ in range(4)
+                        ),
                     )
                 )
             except IntegrityError:
@@ -78,7 +80,9 @@ class Command(BaseCommand):
             Product.objects.bulk_create(
                 Product(
                     name=fake.ecommerce_name(),
-                    description=fake.paragraph(),
+                    description="\n".join(
+                        fake.paragraph(nb_sentences=4) for _ in range(4)
+                    ),
                     price=Decimal(fake.random.randint(1000, 10000) / 100),
                     category=c,
                 )
