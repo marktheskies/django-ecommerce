@@ -12,3 +12,15 @@ repos:
     rev: 22.3.0
     hooks:
       - id: black
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.6.2
+    hooks:
+      - id: prettier
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.14.0
+    hooks:
+      - id: eslint
+        additional_dependencies:
+          - eslint@v8.14.0
+          - eslint-config-prettier@8.5.0
+          - eslint-plugin-react@7.29.4
