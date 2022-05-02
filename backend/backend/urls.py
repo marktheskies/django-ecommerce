@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from ecommerce.views import CategoryView, ProductView
+from ecommerce.views import CategoryViewSet, ProductViewSet
 
 from .routers import ReadOnlyRouter
 
 router = ReadOnlyRouter()
-router.register(r"products", ProductView, "product")
-router.register(r"categories", CategoryView, "category")
+router.register(r"products", ProductViewSet, "product")
+router.register(r"categories", CategoryViewSet, "category")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

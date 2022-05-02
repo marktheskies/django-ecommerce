@@ -1,7 +1,7 @@
-from rest_framework.routers import DynamicRoute, Route, SimpleRouter
+from rest_framework.routers import DefaultRouter, Route
 
 
-class ReadOnlyRouter(SimpleRouter):
+class ReadOnlyRouter(DefaultRouter):
     """
     A custom router which bootstraps readonly API endpoints for a resource.
     """
