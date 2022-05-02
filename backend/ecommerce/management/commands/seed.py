@@ -51,9 +51,9 @@ class Command(BaseCommand):
             "-c",
             type=int,
             default=20,
-            help="""Number of categories to create. This probably won't create 
-            this many categories as category creation is skipped if names 
-            aren't unique. To mitigate this, create more departments in 
+            help="""Number of categories to create. This probably won't create
+            this many categories as category creation is skipped if names
+            aren't unique. To mitigate this, create more departments in
             seed.yaml.""",
         )
         parser.add_argument("--num-products-per-category", "-p", type=int, default=100)
