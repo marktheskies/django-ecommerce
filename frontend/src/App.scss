@@ -1,0 +1,23 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/variables";
+
+$container-max-widths: (
+  sm: 576px,
+  md: 760px,
+  lg: 800px,
+  xl: 950px,
+  xxl: 1000px,
+);
+
+$nav-link-font-weight: 300;
+$nav-link-font-size: 0.8 * $font-size-base;
+$navbar-brand-font-size: 0.8 * $font-size-base;
+$navbar-nav-link-padding-x: 1rem;
+
+$btn-padding-x: 1.75rem;
+
+$paragraph-margin-bottom: 1.6rem;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
