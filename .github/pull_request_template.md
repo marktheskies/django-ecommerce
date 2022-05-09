@@ -5,5 +5,4 @@ Changes proposed in this pull request:
 
 Issues closed by this pull request:
 
-- #\<issue-id\>
-- #\<another-issue-id\>
+- Closes #\<issue-id\>
