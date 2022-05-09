@@ -3,14 +3,29 @@ import { Link } from "react-router-dom";
 import { MoneyFormatter } from "./localization";
 
 const ProductList = () => {
-  const [productsPaginator, setProductsPaginator] = useState({});
+  const [allValues, setAllValues] = useState({
+    nextPage: `${process.env.API_URL}/products?page=1`,
+    products: [],
+    loadingProducts: true,
+  });
+
+  const fetchProducts = (pageUrl) =>
+    fetch(pageUrl).then((response) => response.json());
+
+  const loadMoreProducts = () => {
+    setAllValues({ ...allValues, loadingProducts: true });
+    fetchProducts(allValues.nextPage).then((data) => {
+      setAllValues({
+        ...allValues,
+        nextPage: data.next,
+        products: [...allValues.products, ...data.results],
+        loadingProducts: false,
+      });
+    });
+  };
 
   useEffect(() => {
-    fetch(`${process.env.API_URL}/products`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProductsPaginator(data);
-      });
+    loadMoreProducts();
   }, []);
 
   return (
@@ -24,8 +39,8 @@ const ProductList = () => {
       <section className="container-fluid bg-light py-4 py-md-5">
         <div className="container">
           <div className="row row-cols-1 row-cols-md-3 g-5">
-            {productsPaginator.results
-              ? productsPaginator.results.map((product) => (
+            {allValues.products
+              ? allValues.products.map((product) => (
                   <div key={product.id} className="col">
                     <div className="card h-100 p-5 border-0 shadow-sm product-card">
                       <img
@@ -51,6 +66,21 @@ const ProductList = () => {
                 ))
               : ""}
           </div>
+        </div>
+
+        <div className="container pt-5 text-center">
+          {allValues.loadingProducts ? (
+            <button
+              className="btn btn-secondary disabled"
+              onClick={loadMoreProducts}
+            >
+              Loading products...
+            </button>
+          ) : (
+            <button className="btn btn-secondary" onClick={loadMoreProducts}>
+              Load more products
+            </button>
+          )}
         </div>
       </section>
     </main>
