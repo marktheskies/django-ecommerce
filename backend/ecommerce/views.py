@@ -13,7 +13,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         "list": ProductListSerializer,
         "retrieve": ProductRetrieveSerializer,
     }
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by("pk")
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action)

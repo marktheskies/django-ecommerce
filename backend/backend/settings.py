@@ -130,3 +130,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Whitelist for CORS, to allow frontend to interract with the backend
 
 CORS_ORIGIN_WHITELIST = os.getenv("CORS_ORIGIN_WHITELIST", "").split(",")
+
+# Django Rest Framework pagination configuration
+# https://www.django-rest-framework.org/api-guide/pagination/
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 50,
+}
