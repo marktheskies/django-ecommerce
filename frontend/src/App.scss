@@ -21,3 +21,12 @@ $btn-padding-x: 1.75rem;
 $paragraph-margin-bottom: 1.6rem;
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+.product-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.product-card:hover {
+  box-shadow: $box-shadow !important;
+  transform: scale(1.01);
+}

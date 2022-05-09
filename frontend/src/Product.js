@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProductCarousel from "./ProductCarousel";
+import { MoneyFormatter } from "./localization";
 
 const Product = () => {
   const [product, setProduct] = useState("");
   const { id } = useParams();
-
-  const formatter = new Intl.NumberFormat("en-AU", {
-    style: "currency",
-    currency: "AUD",
-  });
 
   const images = [
     `https://via.placeholder.com/549x366?text=${product.name}+product+image+1`,
@@ -40,7 +36,7 @@ const Product = () => {
           <div className="col-md-5 pe-md-5">
             <h1>{product.name}</h1>
             <p className="fs-5">
-              {product ? formatter.format(product.price) : ""}
+              {product ? MoneyFormatter.format(product.price) : ""}
             </p>
             <div className="d-grid">
               <button type="button" className="btn btn-primary">
