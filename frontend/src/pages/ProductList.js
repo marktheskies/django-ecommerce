@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { MoneyFormatter } from "./localization";
+import { MoneyFormatter } from "../localization";
+import HeadingBar from "../components/HeadingBar";
 
 const ProductList = () => {
   const [allValues, setAllValues] = useState({
@@ -30,11 +31,7 @@ const ProductList = () => {
 
   return (
     <main>
-      <div className="container-fluid border-bottom py-3 fw-light">
-        <div className="container">
-          <h1 className="fw-bolder fs-5 ms-0">All Products</h1>
-        </div>
-      </div>
+      <HeadingBar heading="All Products" />
 
       <section className="container-fluid bg-light py-4 py-md-5">
         <div className="container">
