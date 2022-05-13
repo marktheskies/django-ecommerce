@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { MoneyFormatter } from "./localization";
+import { MoneyFormatter } from "../localization";
 
 const ProductList = () => {
   const [allValues, setAllValues] = useState({

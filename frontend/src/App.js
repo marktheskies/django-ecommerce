@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
-import Product from "./Product";
+import Product from "./pages/Product";
 import "./App.scss";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import ProductList from "./ProductList";
+import ProductList from "./pages/ProductList";
 
 const App = () => {
   return (

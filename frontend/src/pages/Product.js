@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ProductCarousel from "./ProductCarousel";
-import { MoneyFormatter } from "./localization";
+import ProductCarousel from "../ProductCarousel";
+import { MoneyFormatter } from "../localization";
 
 const Product = () => {
   const [product, setProduct] = useState("");
