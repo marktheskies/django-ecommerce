@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProductCarousel from "../components/ProductCarousel";
+import HeadingBar from "../components/HeadingBar";
 import { MoneyFormatter } from "../localization";
 
 const Product = () => {
@@ -21,11 +22,7 @@ const Product = () => {
 
   return (
     <main>
-      <div className="container-fluid border-bottom py-3 fw-light">
-        <div className="container">
-          <span className="fw-bolder fs-5">{product.category}</span>
-        </div>
-      </div>
+      <HeadingBar heading={product.category} />
 
       <section className="container py-4 py-md-5 border-bottom">
         <div className="row gx-5">
