@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  django:
+    build: ./backend
+    env_file:
+      - backend/.env
+    command: ./scripts/entrypoint.sh
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  react:
+    build: ./frontend
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+    ports:
+      - 3000:3000
+    environment:
+      - API_URL=http://localhost:8000/api

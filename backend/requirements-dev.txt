@@ -1,5 +1,2 @@
--r requirements.txt
 black==22.3.0
-Faker==13.3.4
-PyYAML==6.0
 pre-commit==2.18.1
