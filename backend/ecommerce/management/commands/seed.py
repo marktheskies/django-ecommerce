@@ -1,15 +1,19 @@
 import random
+from concurrent.futures import ThreadPoolExecutor
 from decimal import Decimal
 from pathlib import Path
 from typing import Any, Optional
+from uuid import uuid4
 
+import requests
 import yaml
+from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand, CommandParser
 from django.db.utils import IntegrityError
 from faker import Faker
 from faker.providers import BaseProvider
 
-from ...models import Category, Product
+from ...models import Category, Product, ProductAdditionalImage
 
 
 class EcommerceProvider(BaseProvider):
@@ -58,6 +62,22 @@ class Command(BaseCommand):
         )
         parser.add_argument("--num-products-per-category", "-p", type=int, default=100)
 
+    def _download_and_save_product_images(
+        self, product: Product, image_url: str
+    ) -> Product:
+        r = requests.get(image_url, stream=True)
+        product.image.save(f"{uuid4()}.jpg", ImageFile(r.raw))
+        product.image_title = product.name
+        product.save()
+
+        for i in range(2):
+            r = requests.get(image_url, stream=True)
+            pai = ProductAdditionalImage()
+            pai.product = product
+            pai.title = f"{product.name} {i + 1}"
+            pai.save()
+            pai.image.save(f"{uuid4()}.jpg", ImageFile(r.raw))
+
     def handle(self, *args: Any, **options: Any) -> Optional[str]:
         fake = Faker()
         fake.add_provider(EcommerceProvider)
@@ -76,8 +96,9 @@ class Command(BaseCommand):
             except IntegrityError:
                 continue
 
+        products = []
         for c in categories:
-            Product.objects.bulk_create(
+            products += Product.objects.bulk_create(
                 Product(
                     name=fake.ecommerce_name(),
                     description="\n".join(
@@ -88,3 +109,7 @@ class Command(BaseCommand):
                 )
                 for _ in range(options["num_products_per_category"])
             )
+
+        with ThreadPoolExecutor(20) as executor:
+            urls = ["https://picsum.photos/400/500.jpg" for _ in products]
+            executor.map(self._download_and_save_product_images, products, urls)

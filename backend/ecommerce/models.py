@@ -1,3 +1,6 @@
+from email.mime import image
+from itertools import product
+
 from django.db import models
 
 
@@ -12,9 +15,22 @@ class Product(models.Model):
         blank=True,
         related_name="products",
     )
+    image = models.ImageField(upload_to="product-images")
+    image_title = models.CharField(max_length=50)
 
     def __str__(self) -> str:
         return self.name
+
+
+class ProductAdditionalImage(models.Model):
+    image = models.ImageField(upload_to="product-images-additional")
+    title = models.CharField(max_length=50)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="additional_images"
+    )
+
+    def __str__(self) -> str:
+        return f"{self.product.name} - {self.title}"
 
 
 class Category(models.Model):

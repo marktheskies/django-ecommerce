@@ -41,7 +41,7 @@ const ProductList = () => {
                   <div key={product.id} className="col">
                     <div className="card h-100 p-5 border-0 shadow-sm product-card">
                       <img
-                        src={`https://via.placeholder.com/200x200?text=${product.name}+product+image+1`}
+                        src={product.image}
                         className="card-img-top mb-3"
                         alt={product.name}
                       />

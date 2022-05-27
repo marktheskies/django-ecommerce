@@ -5,19 +5,26 @@ import HeadingBar from "../components/HeadingBar";
 import { MoneyFormatter } from "../localization";
 
 const Product = () => {
-  const [product, setProduct] = useState("");
+  const [product, setProduct] = useState({ category: "" });
+  const [images, setImages] = useState([]);
   const { id } = useParams();
-
-  const images = [
-    `https://via.placeholder.com/549x366?text=${product.name}+product+image+1`,
-    `https://via.placeholder.com/549x366?text=${product.name}+product+image+2`,
-    `https://via.placeholder.com/549x366?text=${product.name}+product+image+3`,
-  ];
 
   useEffect(() => {
     fetch(`${process.env.API_URL}/products/${id}`)
       .then((response) => response.json())
-      .then((product) => setProduct(product));
+      .then((product) => {
+        setProduct(product);
+
+        const additional_images = product.additional_images.map((p) => ({
+          url: p.image,
+          title: p.image_title,
+        }));
+
+        setImages([
+          { url: product.image, title: product.image_title },
+          ...additional_images,
+        ]);
+      });
   }, []);
 
   return (

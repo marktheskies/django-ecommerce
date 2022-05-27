@@ -11,7 +11,7 @@ const ProductCarousel = (props) => {
       <div className="carousel-inner">
         {props.images.map((image, i) => (
           <div key={i} className={"carousel-item" + (i == 0 ? " active" : "")}>
-            <img src={image} className="d-block w-100" alt="..." />
+            <img src={image.url} className="d-block w-100" alt={image.title} />
           </div>
         ))}
       </div>
@@ -38,7 +38,9 @@ const ProductCarousel = (props) => {
 };
 
 ProductCarousel.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({ url: PropTypes.string, title: PropTypes.string })
+  ).isRequired,
 };
 
 export default ProductCarousel;

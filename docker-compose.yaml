@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  s3:
+    image: adobe/s3mock
+    volumes:
+      - ./data/s3:/s3mockroot
+    environment:
+      initialBuckets: ecommerce
+      retainFilesOnExit: true
+    ports:
+      - 9090:9090
+  postgres:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  django:
+    build: ./backend
+    volumes:
+      - ./backend/backend:/usr/src/app/backend
+      - ./backend/ecommerce:/usr/src/app/ecommerce
+    env_file:
+      - backend/.secret
+    environment:
+      DEBUG: True
+      CORS_ORIGIN_WHITELIST: http://localhost:3000
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      AWS_STORAGE_BUCKET_NAME: ecommerce
+      AWS_S3_REGION_NAME: ap-southeast-2
+      AWS_S3_ENDPOINT_URL: http://s3:9090
+    command: ./scripts/entrypoint.sh
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  react:
+    build: ./frontend
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+    ports:
+      - 3000:3000
+    environment:
+      - API_URL=http://localhost:8000/api
