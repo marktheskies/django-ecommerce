@@ -1,10 +1,10 @@
 full-install:
 	make clean
 	make install
-	make environ
+	make django-secret-key
+	make migrations
 	make migrate
 	make superuser
-	make seed
 	make devserver
 
 install:
@@ -26,16 +26,9 @@ install:
 	# Install frontend dependencies.
 	cd frontend && npm install
 
-environ:
-	# Scaffold a new .env file
-	echo SECRET_KEY=$$(backend/venv/bin/python -c 'import secrets; print(secrets.token_urlsafe())') > backend/.env
-	echo DEBUG=True >> backend/.env
-	echo CORS_ORIGIN_WHITELIST=http://localhost:3000 >> backend/.env
-	echo DB_NAME=postgres >> backend/.env
-	echo DB_USER=postgres >> backend/.env
-	echo DB_PASS=postgres >> backend/.env
-	echo DB_HOST=postgres >> backend/.env
-	echo DB_PORT=5432 >> backend/.env
+django-secret-key:
+	# Create a strong secret key in backend/.secret
+	echo SECRET_KEY=$$(backend/venv/bin/python -c 'import secrets; print(secrets.token_urlsafe())') > backend/.secret
 
 devserver:
 	# Run a dockerised development server.
@@ -43,6 +36,9 @@ devserver:
 
 migrate:
 	docker compose run --rm django python manage.py migrate
+
+migrations:
+	docker compose run --rm django python manage.py makemigrations
 
 superuser:
 	docker compose run --rm django python manage.py createsuperuser

@@ -8,6 +8,6 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update
 RUN apt-get install -y postgresql-client
 
-WORKDIR /code
+WORKDIR /usr/src/app
 COPY . .
 RUN pip install -r requirements.txt

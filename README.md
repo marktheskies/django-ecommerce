@@ -5,7 +5,10 @@
 A simple ecommerce implementation written in Django and React.
 
 - [Prerequisites](#prerequisites)
-- [Setting up a development environment (quick start)](#setting-up-a-development-environment-quick-start)
+- [Setting up a development environment](#setting-up-a-development-environment)
+  - [Before you start (hosts file hack)](#before-you-start-hosts-file-hack)
+  - [Quick installation](#quick-installation)
+  - [Custom installation](#custom-installation)
 - [Docker environment architecture](#docker-environment-architecture)
 - [Seeding the database](#seeding-the-database)
 
@@ -15,7 +18,19 @@ A simple ecommerce implementation written in Django and React.
 2. [Python3](https://www.python.org/downloads/)
 3. [GNU Make](https://www.gnu.org/software/make/)
 
-## Setting up a development environment (quick start)
+## Setting up a development environment
+
+### Before you start (hosts file hack)
+
+The development environment contains a mock S3 service which is accessible via the s3 endpoint `http://s3:9090`. Docker services can communicate natively on this hostname, however, your local machine (host) cannot. This means that without adding an entry for `s3` to your `/etc/hosts`, you won't be able to view any images uploaded via the Django backend.
+
+To resolve this issue, add the following line to `/etc/hosts` on your local machine.
+
+```text
+127.0.0.1       s3
+```
+
+### Quick installation
 
 The fastest way to get started is to use the full-install command provided in [Makefile](./Makefile):
 
@@ -33,12 +48,15 @@ Under the hood, `make full-install`:
 4. Installs [pre-commit hooks](https://pre-commit.com/) defined in [.pre-commit-config.yaml](.pre-commit-config.yaml)
 5. Installs Frontend dependencies in [frontend/](./frontend/)
 6. Adds environment variables to `backend/.env`
-7. Applies Django migrations to Postgres, in a Docker container
-8. Guides you through the creation of a Django superuser
-9. Adds demo data to the Postgres database
-10. Starts the Docker frontend, backend and database services
+7. Makes Django migration files
+8. Applies Django migrations to Postgres, in a Docker container
+9. Guides you through the creation of a Django superuser
+10. Adds demo data to the Postgres database
+11. Starts the Docker frontend, backend and database services
 
-Each step of `make full-install` is available as its own command, so you can run each in isolation, as needed.
+### Custom installation
+
+Each step of `make full-install` is available as its own `make` command, so you can run each in isolation, as needed. See the [Makefile](./Makefile) for more information.
 
 ## Docker environment architecture
 

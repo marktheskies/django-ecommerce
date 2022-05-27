@@ -1,7 +1,7 @@
 .git
 .github
 .gitignore
-.env
+.secret
 *.sqlite3
 Dockerfile
 __pycache__
