@@ -60,13 +60,18 @@ Each step of `make full-install` is available as its own `make` command, so you 
 
 ## Docker environment architecture
 
-The Docker environment comprises of 3 Docker containers, which are each defined as services in [docker-compose.yaml](./docker-compose.yaml):
+The Docker environment comprises of 4 Docker containers, which are each defined as services in [docker-compose.yaml](./docker-compose.yaml):
 
 1. Backend (Django)
 2. Frontend (React)
 3. Database (Postgres)
+4. Object Store (Mock S3)
 
 The container running the frontend application spins up independently. The backend container not only relies on the database container, but requires postgres to be running before it can start the Django server. To achieve this, we make use of Docker Compose's [healthcheck](https://docs.docker.com/compose/compose-file/#healthcheck) configuration.
+
+We use a container running [adobe/s3mock](https://github.com/adobe/S3Mock) to simulate Amazon S3 object storage for Django file storage. Once the container is running, services and the host running the service can make calls using the AWS S3 CLI or SDK to it.
+
+Data stored by Object Store and Database containers are persisted via Docker Volume in the `data/` directory.
 
 ## Seeding the database
 
