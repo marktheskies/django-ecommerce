@@ -27,6 +27,7 @@ services:
     build: ./backend
     volumes:
       - ./backend/backend:/usr/src/app/backend
+      - ./backend/core:/usr/src/app/core
       - ./backend/ecommerce:/usr/src/app/ecommerce
     env_file:
       - backend/.secret

@@ -3,5 +3,6 @@ __pycache__
 .secret
 *.sqlite3
 node_modules/
-migrations/
+backend/*/migrations/*
+!backend/*/migrations/__init__.py
 data/

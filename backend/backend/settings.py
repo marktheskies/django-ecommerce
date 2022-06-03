@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "storages",
     "rest_framework",
+    "core",
     "ecommerce",
 ]
 
@@ -108,6 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+
+# Custom user model
+# https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#substituting-a-custom-user-model
+AUTH_USER_MODEL = "core.User"
 
 
 # Internationalization
